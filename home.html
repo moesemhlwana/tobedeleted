@@ -272,24 +272,9 @@
 
 
 <!-- Connection to Firebase -->
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
 <script>
-    // Initialize Firebase - be sure to use your own code, this connects to my database.
-    // Initialize Firebase
-var firebaseConfig = {
-apiKey: "AIzaSyBYbrbYnYMRYlZxBhAj3bbevuFqHFfYaGQ",
-authDomain: "tobedeleted-77157.firebaseapp.com",
-databaseURL: "https://tobedeleted-77157.firebaseio.com",
-projectId: "tobedeleted-77157",
-storageBucket: "tobedeleted-77157.appspot.com",
-messagingSenderId: "482222301486",
-appId: "1:482222301486:web:d5bec76ca3b902b3aa9abf",
-measurementId: "G-74QWYSX6YP"
-};
 
-    firebase.initializeApp(firebaseConfig);
-    //Rootref is the whole database.
+ 
     const rootRef = firebase.database().ref();
     //commentsRef is just the pageCountsNode
     const commentsRef = rootRef.child('comments');
