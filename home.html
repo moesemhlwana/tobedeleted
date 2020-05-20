@@ -269,3 +269,63 @@
 //**************************************Retrieve and display data from firebase ends here**************************************
 </script>
 <!----------------------------------------Validation of uploading blogs Ends here---------------------------------------------->
+
+
+<!-- Connection to Firebase -->
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+<script>
+    // Initialize Firebase - be sure to use your own code, this connects to my database.
+    // Initialize Firebase
+var firebaseConfig = {
+apiKey: "AIzaSyBYbrbYnYMRYlZxBhAj3bbevuFqHFfYaGQ",
+authDomain: "tobedeleted-77157.firebaseapp.com",
+databaseURL: "https://tobedeleted-77157.firebaseio.com",
+projectId: "tobedeleted-77157",
+storageBucket: "tobedeleted-77157.appspot.com",
+messagingSenderId: "482222301486",
+appId: "1:482222301486:web:d5bec76ca3b902b3aa9abf",
+measurementId: "G-74QWYSX6YP"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    //Rootref is the whole database.
+    const rootRef = firebase.database().ref();
+    //commentsRef is just the pageCountsNode
+    const commentsRef = rootRef.child('comments');
+    //Listen for click on Submit Comment button, and post comment.
+    document.getElementById("btnSubmitComment").addEventListener("click", function () {
+    console.log('okay not strange right');
+        //Replace line breaks in comment with br tags.
+        var newcomment = document.getElementById('txComment').value.replace(/\n/g, "<br>");
+        //Define a new, keyed post.
+        var newPostRef = commentsRef.push();
+        //Fill tne new keyed post with data
+        newPostRef.set({
+            name: document.getElementById('tbName').value.trim(),
+            comment: newcomment.trim(),
+            frompage: location.pathname,
+            when: firebase.database.ServerValue.TIMESTAMP
+        });
+    });
+
+    function showpastcomments() {
+    
+        var showat = document.getElementById('pastcomments');
+        //Get comments whose from page equals this page's pathname.
+        var commentsRef = firebase.database().ref('comments/').orderByChild('frompage').equalTo(location.pathname);
+        commentsRef.once('value', function (snapshot) {
+            snapshot.forEach(function (itemSnapshot) {
+                //Get the object for one snapshot
+                var itemData = itemSnapshot.val();
+                var comment = itemData.comment;
+                var name = itemData.name;
+                var when = new Date(itemData.when).toLocaleDateString("en-us");
+                showat.innerHTML += "<li>" + comment + "<span> -- " + name + " (" + when +
+                    ")</span></li>";
+            })
+        })
+    }
+    //Called when page first opens and also after Submit button click to show all comments for this page.
+    showpastcomments()
+</script>
