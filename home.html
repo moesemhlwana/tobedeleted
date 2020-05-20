@@ -269,6 +269,7 @@
         const commentsRef = rootRef.child('comments');
         //Listen for click on Submit Comment button, and post comment.
         document.getElementById("btnSubmitComment").addEventListener("click", function () {
+            console.log('button pressed, thats good right');
             //Replace line breaks in comment with br tags.
             var newcomment = document.getElementById('txComment').value.replace(/\n/g, "<br>");
             //Define a new, keyed post.
